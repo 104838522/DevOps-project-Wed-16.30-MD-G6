@@ -19,7 +19,8 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 echo 'Checking out source code from GitHub repository...'
-                git branch: 'main', url: 'https://github.com/<your-username>/<your-repo-name>.git'
+                git url: 'https://github.com/104838522/DevOps-project-Wed-16.30-MD-G6.git', branch: 'main'
+
             }
         }
 
