@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      <div className="profile-container">
+      <div className="profile-row">
         <Profile 
           name="Violet Grant" 
           role="Project Lead"
