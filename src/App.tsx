@@ -6,7 +6,25 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      <Profile name="Violet"/>
+      <div className="profile-container">
+        <Profile 
+          name="Violet Grant" 
+          role="Project Lead"
+        />
+        <Profile
+          name="Senupama Deshipriya"
+          role="Measurement and Metrics Analyst"
+        />
+        <Profile
+          name="Daehyeon Kim"
+          role="Jenkins and Deployment Lead"
+        />
+        <Profile
+          name="Kavindu Bopitiya"
+          role="AWS Specialist"
+        />
+      </div>
+      
       <Footer/>
     </div>
   );
