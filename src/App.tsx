@@ -1,24 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+
+// export const DarkModeToggle = () => {
+//   const [isDark, setIsDark] = useState(true);
+//   return(
+    
+//   );
+// }
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Initial Commit
-        </a>
-      </header>
+      <h1>Software Deployment and Evolution</h1>
+      <h2>SDE40006</h2>
+      <p>A website built for group Wed-16:30-MD-G6.</p>
     </div>
   );
 }
