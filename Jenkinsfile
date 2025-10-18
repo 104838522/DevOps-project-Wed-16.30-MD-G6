@@ -6,12 +6,10 @@ pipeline {
     agent any
 
     tools {
-        // Jenkins -> Manage Jenkins -> Global Tool Configuration -> NodeJS -> name: "NodeJS 18"
         nodejs "NodeJS 24"
     }
 
     environment {
-        // Optional: set environment variables (can be used for API keys, build modes, etc.)
         BUILD_ENV = "production"
     }
 
@@ -33,7 +31,7 @@ pipeline {
         stage('Build Application') {
             steps {
                 echo 'Building the React/TypeScript application...'
-                bat 'npm run build'
+                bat 'set CI=false && npm run build'
             }
         }
 
