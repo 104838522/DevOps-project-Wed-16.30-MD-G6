@@ -8,6 +8,10 @@
   justify-items: center;
 }
 
+.profilecontainer{
+  padding: 20px;
+}
+
 .profile {
   border: 1px solid black;
   border-radius: 10px;
@@ -16,4 +20,16 @@
   margin: 10px;
   text-align: center;
   width: 50%;
+
+  img{
+    height: 300px;
+    width: 300px;
+    object-fit: contain;
+  }
+
+}
+
+.profileh1{
+  display: flex;
+  justify-content: center;
 }
