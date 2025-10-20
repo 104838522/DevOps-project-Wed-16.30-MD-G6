@@ -1,0 +1,28 @@
+@import "../../fonts.css";
+
+.leftContainer{
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(199, 217, 255);
+    height: 500px;
+    img{
+        -webkit-filter: blur(2px);
+        filter: blur(2px);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    h1{
+        //font stuff
+        font-size: 50px;
+        font-family: "Inria Sans";
+        font-weight: 700;
+        font-style: italic;
+
+        padding: 50px;
+        z-index: 2;
+        position: absolute;
+        top: 3vh;
+        left: 1vh;
+    }
+}
