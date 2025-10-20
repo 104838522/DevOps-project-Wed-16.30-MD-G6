@@ -5,12 +5,25 @@ type ContentBlockProps = {
     content: string,
     image: string,
     left: boolean,
+    colour: string
 }
 
-function ContentBlock({title, content, image, left}:ContentBlockProps){
+function ContentBlock({title, content, image, left, colour}:ContentBlockProps){
+    
+    let colourprop;
+
+    switch(colour){
+        case "blue": {
+            colourprop = styles.blue
+            break;
+        }
+    }
+    
     if (left){
+
+
         return(
-            <div className={`${styles.global} ${styles.leftContainer}`}>
+            <div className={`${styles.global} ${styles.leftContainer} ${colourprop}`}>
                 <div className={styles.textContainer}>
                     <h1>{title}</h1>
                     <p>{content}</p>
@@ -21,7 +34,7 @@ function ContentBlock({title, content, image, left}:ContentBlockProps){
         );
     } else {
         return(
-            <div className={`${styles.global} ${styles.rightContainer}`}>
+            <div className={`${styles.global} ${styles.rightContainer} ${colourprop}`}>
                 <img src={image}/>
                 <div className={styles.textContainer}>
                     <h1>{title}</h1>

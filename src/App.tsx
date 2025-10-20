@@ -19,12 +19,14 @@ function App() {
           content={DevOpsContent}
           image={require("./images/devops.png")}
           left={true}
+          colour="blue"
         />
         <ContentBlock 
           title="What Is DevOps?" 
           content={DevOpsContent}
           image={require("./images/devops.png")}
           left={false}
+          colour="blue"
         />
         <Profile/>
       <Footer/>
