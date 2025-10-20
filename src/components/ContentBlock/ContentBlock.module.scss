@@ -1,0 +1,31 @@
+@import "../../fonts.css";
+
+.global{
+    display: flex;
+    &.leftContainer{
+        img{
+            width: 100%;
+            object-fit: contain;
+        }
+        .textContainer{
+            padding: 50px;
+            width: 50%;
+        }
+    }
+
+    &.rightContainer{
+        img{
+            width: 100%;
+            object-fit: contain;
+        }
+        .textContainer{
+            padding: 50px;
+            width: 50%;
+        }
+    }
+}
+
+.blue{
+    background-color: rgb(209, 209, 255);
+}
+
