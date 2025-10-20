@@ -1,31 +1,51 @@
 @import "../../fonts.css";
 
-.global{
+.container{
     display: flex;
-    &.leftContainer{
-        img{
-            width: 100%;
-            object-fit: contain;
-        }
-        .textContainer{
-            padding: 50px;
-            width: 50%;
+
+    &.blue{
+        background-color: #87afff;
+    }
+
+    &.red{
+        background-color: rgb(255, 156, 156);
+        background-image: url("../../images/dot-grid.webp");
+        background-blend-mode: multiply;
+    }
+
+    &.purple{
+        background-color: rgb(159, 159, 255,);
+        background-image: url("../../images/checkerboard-cross.webp");
+        background-blend-mode: color-burn; 
+    }
+
+    &.grey{
+        background-color: #2b3137;
+        background-image: url("../../images/prism.png");
+        background-blend-mode: lighten;
+        p, h1{
+            color: white;
         }
     }
 
-    &.rightContainer{
-        img{
-            width: 100%;
-            object-fit: contain;
-        }
-        .textContainer{
-            padding: 50px;
-            width: 50%;
-        }
+    &.orange{
+        background-color: rgb(255, 235, 199);
+        background-image: url("../../images/interlaced.png");
+        background-blend-mode: multiply;
     }
-}
 
-.blue{
-    background-color: rgb(209, 209, 255);
+    img{
+        width: 50%;
+        height: 300px;
+        margin: auto;
+        object-fit: contain;
+        padding: 20px;
+    }
+
+    .textContainer{
+        padding: 50px;
+        width: 50%;
+    }
+
 }
 
