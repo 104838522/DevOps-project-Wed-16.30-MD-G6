@@ -3,7 +3,7 @@ import styles from "./Profile.module.scss";
 
 function Profile(){
     return(
-        <div>
+        <div className={styles.profilecontainer}>
             <h1 className={styles.profileh1}>Meet The Team</h1>
             <div className={styles["profile-row"]} id="about">
                 <ProfileContent
@@ -22,6 +22,7 @@ function Profile(){
                 <ProfileContent
                     name="Kavindu Bopitiya"
                     role="Docker Specialist"
+                    imgsrc={require("../../images/profilepictures/kaviya.jpg")}
                 />
             </div>
         </div>
