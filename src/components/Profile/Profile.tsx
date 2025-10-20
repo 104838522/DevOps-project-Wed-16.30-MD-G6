@@ -14,10 +14,12 @@ function Profile(){
                 <ProfileContent
                     name="Senupama Deshipriya"
                     role="Measurement and Metrics Analyst"
+                    imgsrc={require("../../images/profilepictures/senu.jpg")}
                 />
                 <ProfileContent
                     name="Daehyeon Kim"
                     role="Jenkins and Deployment Lead"
+                    imgsrc={require("../../images/profilepictures/kim.jpg")}
                 />
                 <ProfileContent
                     name="Kavindu Bopitiya"
