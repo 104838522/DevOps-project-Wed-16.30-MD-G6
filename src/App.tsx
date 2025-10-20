@@ -1,6 +1,6 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Profile from './components/Profile-content'
+import Profile from './components/Profile/Profile-content'
 
 function App() {
   return (
