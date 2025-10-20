@@ -13,6 +13,7 @@
         object-fit: cover;
     }
     h1{
+        font-size: 80px;
         z-index: 2;
         backdrop-filter: blur(3px);
         position: absolute;
@@ -21,6 +22,7 @@
         transform: translate(-50%, -50%);
         text-align: center;
         color: white;
+        width: 100%;
     }
 
 }
