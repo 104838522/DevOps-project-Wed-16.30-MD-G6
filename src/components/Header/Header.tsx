@@ -3,7 +3,6 @@ import styles from './Header.module.scss';
 function Header() {
     return (
         <header className={styles.header}>
-            <h1>Software Deployment and Evolution</h1>
             <nav>
                 <ul>
                     <li><a href="/home">Home</a></li>
