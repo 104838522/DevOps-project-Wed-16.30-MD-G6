@@ -50,6 +50,15 @@ pipeline {
                 archiveArtifacts artifacts: 'build/**', followSymlinks: false
             }
         }
+        stage('Deploy to AWS EC2') {
+            steps {
+               echo 'Deploying build output to AWS EC2 production server...'
+               sh '''
+                     scp -i /var/lib/jenkins/SDE-project-key.pem -o StrictHostKeyChecking=no -r build/* ubuntu@13.239.252.132:/var/www/html/
+               '''
+             }
+        }     
+
     }
 
     post {
