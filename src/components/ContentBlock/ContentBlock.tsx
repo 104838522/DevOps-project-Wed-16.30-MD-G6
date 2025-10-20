@@ -4,22 +4,29 @@ type ContentBlockProps = {
     title: string,
     content: string,
     image: string,
-    left: boolean
+    left: boolean,
 }
 
 function ContentBlock({title, content, image, left}:ContentBlockProps){
     if (left){
         return(
-            <div className={styles.leftContainer}>
-                <h1>{title}</h1>
-                <p>{content}</p>
+            <div className={`${styles.global} ${styles.leftContainer}`}>
+                <div className={styles.textContainer}>
+                    <h1>{title}</h1>
+                    <p>{content}</p>
+                </div>
+                
                 <img src={image}/>
             </div>
         );
     } else {
         return(
-            <div>
-
+            <div className={`${styles.global} ${styles.rightContainer}`}>
+                <img src={image}/>
+                <div className={styles.textContainer}>
+                    <h1>{title}</h1>
+                    <p>{content}</p>
+                </div>
             </div>
         );
     }
