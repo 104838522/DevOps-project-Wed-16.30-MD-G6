@@ -1,28 +1,19 @@
 @import "../../fonts.css";
 
-.global{
+.container{
     display: flex;
-    &.leftContainer{
-        img{
-            width: 100%;
-            object-fit: contain;
-        }
-        .textContainer{
-            padding: 50px;
-            width: 50%;
-        }
+    img{
+        width: 50%;
+        height: 200px;
+        margin: auto;
+        object-fit: contain;
     }
 
-    &.rightContainer{
-        img{
-            width: 100%;
-            object-fit: contain;
-        }
-        .textContainer{
-            padding: 50px;
-            width: 50%;
-        }
+    .textContainer{
+        padding: 50px;
+        width: 50%;
     }
+
 }
 
 .blue{

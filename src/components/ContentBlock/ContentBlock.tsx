@@ -18,12 +18,10 @@ function ContentBlock({title, content, image, left, colour}:ContentBlockProps){
             break;
         }
     }
-    
+
     if (left){
-
-
         return(
-            <div className={`${styles.global} ${styles.leftContainer} ${colourprop}`}>
+            <div className={`${styles.container} ${colourprop}`}>
                 <div className={styles.textContainer}>
                     <h1>{title}</h1>
                     <p>{content}</p>
@@ -34,7 +32,7 @@ function ContentBlock({title, content, image, left, colour}:ContentBlockProps){
         );
     } else {
         return(
-            <div className={`${styles.global} ${styles.rightContainer} ${colourprop}`}>
+            <div className={`${styles.container} ${colourprop}`}>
                 <img src={image}/>
                 <div className={styles.textContainer}>
                     <h1>{title}</h1>
