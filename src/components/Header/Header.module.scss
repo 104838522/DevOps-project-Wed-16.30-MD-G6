@@ -4,6 +4,7 @@ ul {
     padding: 0;
     display: flex;
     background-color: black;
+    align-items: center;
     li a{
         color: white;
         display: block;
@@ -14,4 +15,10 @@ ul {
 
 ul li a:hover{
     background-color: #868686;
+}
+
+h1, p{
+    margin: 10px;
+    margin-left: auto;
+    color: white;
 }

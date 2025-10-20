@@ -6,8 +6,9 @@ function Header() {
             <nav>
                 <ul>
                     <li><a href="/home">Home</a></li>
-                    <li><a href="/about">About</a></li>
                     <li><a href="/DevOps">DevOps</a></li>
+                    <li><a href="/about">About</a></li>
+                    <p>Created with React</p>
                 </ul>
             </nav>
         </header>
