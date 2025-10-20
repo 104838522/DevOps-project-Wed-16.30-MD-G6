@@ -57,7 +57,26 @@ pipeline {
                      scp -i /var/lib/jenkins/SDE-project-key.pem -o StrictHostKeyChecking=no -r build/* ubuntu@13.239.252.132:/var/www/html/
                '''
              }
-        }     
+        }
+        stage('Monitor Production') {
+            steps {
+                echo 'Running monitoring instrumentation on AWS EC2...'
+                sh '''
+                echo "Connecting to AWS EC2 and collecting system metrics..."
+                  ssh -i /var/lib/jenkins/swe40006-key.pem -o StrictHostKeyChecking=no ubuntu@13.239.252.132 "
+                    echo '===== CPU and Memory Stats =====';
+                    top -b -n 1 | head -5;
+                    echo '===== Memory Usage =====';
+                    free -m;
+                    echo '===== Uptime and Load =====';
+                    uptime;
+                    echo '===== Response Time =====';
+                    curl -o /dev/null -s -w 'HTTP=%{http_code}, time_total=%{time_total}s\\n' http://localhost;
+                "
+            '''
+        }
+    }
+}
 
     }
 
