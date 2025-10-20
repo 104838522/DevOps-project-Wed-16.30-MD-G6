@@ -1,8 +1,8 @@
 import styles from "./Profile.module.scss";
 
-function Profile({name, imgsrc = "https://placehold.co/150", role}:{name: string, imgsrc?: string, role: string}){
+function ProfileContent({name, imgsrc = "https://placehold.co/150", role}:{name: string, imgsrc?: string, role: string}){
     return(
-        <div className={"profile ${styles.profile}"}>
+        <div className={styles.profile}>
             <img src={imgsrc}></img>
             <h2>{name}</h2>
             <h3>{role}</h3>
@@ -10,4 +10,4 @@ function Profile({name, imgsrc = "https://placehold.co/150", role}:{name: string
     );
 }
 
-export default Profile
+export default ProfileContent
