@@ -2,11 +2,44 @@
 
 .container{
     display: flex;
+
+    &.blue{
+        background-color: #87afff;
+    }
+
+    &.red{
+        background-color: rgb(255, 156, 156);
+        background-image: url("../../images/dot-grid.webp");
+        background-blend-mode: multiply;
+    }
+
+    &.purple{
+        background-color: rgb(159, 159, 255,);
+        background-image: url("../../images/checkerboard-cross.webp");
+        background-blend-mode: color-burn; 
+    }
+
+    &.grey{
+        background-color: #2b3137;
+        background-image: url("../../images/prism.png");
+        background-blend-mode: lighten;
+        p, h1{
+            color: white;
+        }
+    }
+
+    &.orange{
+        background-color: rgb(255, 235, 199);
+        background-image: url("../../images/interlaced.png");
+        background-blend-mode: multiply;
+    }
+
     img{
         width: 50%;
-        height: 200px;
+        height: 300px;
         margin: auto;
         object-fit: contain;
+        padding: 20px;
     }
 
     .textContainer{
@@ -14,9 +47,5 @@
         width: 50%;
     }
 
-}
-
-.blue{
-    background-color: rgb(209, 209, 255);
 }
 
