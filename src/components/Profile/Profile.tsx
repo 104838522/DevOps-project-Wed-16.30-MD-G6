@@ -3,7 +3,7 @@ import styles from "./Profile.module.scss";
 
 function Profile(){
     return(
-        <div className={styles["profile-row"]}>
+        <div className={styles["profile-row"]} id="about">
             <ProfileContent
                 name="Violet Grant" 
                 role="Project Lead"
