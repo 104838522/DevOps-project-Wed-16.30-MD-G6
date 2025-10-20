@@ -2,7 +2,7 @@ import styles from './Header.module.scss';
 
 function Header() {
     return (
-        <header className={styles.header}>
+        <header className={styles.header} id="home">
             <nav>
                 <ul>
                     <li><a href="#home">Home</a></li>
