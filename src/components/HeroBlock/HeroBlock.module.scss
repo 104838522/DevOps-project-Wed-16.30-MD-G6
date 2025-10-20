@@ -1,0 +1,27 @@
+.container{
+    position: relative;
+    overflow: hidden;
+    background-color:rgb(59, 59, 59);
+    width: 100%;
+    height: 500px;
+    align-content: center;
+    img{
+        -webkit-filter: blur(3px);
+        filter: blur(3px);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    h1{
+        z-index: 2;
+        backdrop-filter: blur(3px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+    }
+
+}
+

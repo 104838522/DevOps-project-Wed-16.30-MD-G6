@@ -1,4 +1,3 @@
-
 function Footer(){
     const currentYear: number = new Date().getFullYear();
     return(
