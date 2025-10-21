@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  devops-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devops-project-app:latest
+    container_name: devops-project-container
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "com.devops.project=wed-16.30-md-g6"
+      - "com.devops.team=violet-grant"
