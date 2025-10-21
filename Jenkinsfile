@@ -1,7 +1,3 @@
-// Jenkinsfile for SWE40006 DevOps Pipeline
-// Author: Daehyeon Kim (Repo & CI/Build Server Engineer)
-// Description: Automates build, test, and Docker deployment for a React/TypeScript project using NodeJS.
-
 pipeline {
     agent any
 
@@ -12,15 +8,18 @@ pipeline {
     environment {
         BUILD_ENV = "production"
         DOCKER_IMAGE = "devops-project-app"
-        DOCKER_TAG = "latest"
         CONTAINER_NAME = "devops-project-container"
         APP_PORT = "80"
+        SSH_KEY = "/var/lib/jenkins/SDE-project-key.pem"
+        SSH_USER = "ubuntu"
+        SSH_HOST = "13.239.252.132"
+        SSH_DIR = "/var/www/html/"
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                echo 'Checking out source code from GitHub repository...'
+                echo 'Cloning GitHub repository...'
                 git credentialsId: 'github-login', url: 'https://github.com/104838522/DevOps-project-Wed-16.30-MD-G6.git', branch: 'main'
             }
         }
@@ -34,68 +33,65 @@ pipeline {
 
         stage('Build Application') {
             steps {
-                echo 'Building the React/TypeScript application...'
+                echo 'Building React/TypeScript app...'
                 bat 'set CI=false && npm run build'
             }
         }
 
         stage('Run Tests') {
-        steps {
-            echo 'Running automated tests...'
-            // Pass even if there are no tests or test failures
-            bat 'npm test -- --passWithNoTests || echo "Tests failed or skipped (demo environment)"'
+            steps {
+                echo 'Running automated tests...'
+                bat 'npm test -- --passWithNoTests || echo "Tests failed or skipped (demo environment)"'
+            }
         }
-        }
-
 
         stage('Archive Build Artifacts') {
             steps {
-                echo 'Archiving build artifacts for later deployment...'
+                echo 'Archiving build artifacts...'
                 archiveArtifacts artifacts: 'build/**', followSymlinks: false
             }
         }
 
-        stage('Build Docker Image') {
+        // ---------------- Docker Stage ----------------
+        stage('Docker Deploy') {
             steps {
-                echo 'Building Docker image...'
+                echo 'Building and running Docker container...'
                 script {
-                    // Build Docker image using docker compose (V2)
                     bat "docker compose build"
-                }
-            }
-        }
-
-        stage('Stop Old Container') {
-            steps {
-                echo 'Stopping and removing old container if exists...'
-                script {
-                    // Stop and remove old container (ignore errors if container doesn't exist)
                     bat "docker stop ${CONTAINER_NAME} || echo Container not running"
                     bat "docker rm ${CONTAINER_NAME} || echo Container not found"
-                }
-            }
-        }
-
-        stage('Deploy Docker Container') {
-            steps {
-                echo 'Deploying new Docker container...'
-                script {
-                    // Deploy using docker compose (V2)
                     bat "docker compose up -d"
+                    bat "timeout /t 5 /nobreak"
+                    bat "docker ps -f name=${CONTAINER_NAME}"
                 }
             }
         }
 
-        stage('Verify Deployment') {
+        // ---------------- AWS Deploy Stage ----------------
+        stage('Deploy to AWS EC2') {
             steps {
-                echo 'Verifying deployment...'
-                script {
-                    // Wait a moment for container to start
-                    bat "timeout /t 5 /nobreak"
-                    // Check if container is running
-                    bat "docker ps -f name=${CONTAINER_NAME}"
-                    echo "Application deployed successfully and running on port ${APP_PORT}"
-                }
+                echo 'Deploying build output to AWS EC2 production server...'
+                sh '''
+                    scp -i /var/lib/jenkins/SDE-project-key.pem -o StrictHostKeyChecking=no -r build/* ubuntu@13.239.252.132:/var/www/html/
+                '''
+            }
+        }
+
+        stage('Monitor AWS EC2') {
+            steps {
+                echo 'Running remote system monitoring on AWS EC2...'
+                sh '''
+                    ssh -i /var/lib/jenkins/SDE-project-key.pem -o StrictHostKeyChecking=no ubuntu@13.239.252.132 "
+                        echo '===== CPU and Memory Stats =====';
+                        top -b -n 1 | head -5;
+                        echo '===== Memory Usage =====';
+                        free -m;
+                        echo '===== Uptime =====';
+                        uptime;
+                        echo '===== HTTP Response =====';
+                        curl -o /dev/null -s -w 'HTTP=%{http_code}, time_total=%{time_total}s\\n' http://localhost;
+                    "
+                '''
             }
         }
     }
@@ -103,14 +99,11 @@ pipeline {
     post {
         success {
             echo 'Pipeline completed successfully!'
-            echo "Application is now running at http://localhost:${APP_PORT}"
+            echo "Docker container running locally, and app deployed to AWS EC2!"
         }
         failure {
-            echo 'Pipeline failed. Check Jenkins console output for details.'
-            // Cleanup on failure
-            script {
-                bat "docker compose down || echo No containers to clean up"
-            }
+            echo 'Pipeline failed. Check Jenkins logs for details.'
+            bat "docker compose down || echo Cleanup complete"
         }
     }
 }
