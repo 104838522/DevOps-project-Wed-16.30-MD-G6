@@ -81,9 +81,10 @@ pipeline {
                     ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo '=== Nginx Status ===' && sudo systemctl status nginx | head -5"
 
                     ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo '=== HTTP Response ===' && curl -o /dev/null -s -w "HTTP=%{http_code}, time_total=%{time_total}s\n" http://localhost
+                """ 
             }
-    
         }
+    }
 
     post {
         success {
