@@ -29,7 +29,7 @@ function App() {
       <Header/>
         <HeroBlock/>
         <ContentBlock 
-          title="What Is DevOps?" 
+          title="Live Code Demonstration" 
           content={DevOpsContent}
           image={require("./images/devops.png")}
           left={true}
