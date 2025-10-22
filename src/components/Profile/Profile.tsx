@@ -9,22 +9,22 @@ function Profile(){
                 <ProfileContent
                     name="Violet Grant" 
                     role="Project Lead"
-                    imgsrc={require("../../images/profilepictures/vi.png")}
+                    imgsrc={require("../../images/profilepictures/vi.png")} alt=""
                 />
                 <ProfileContent
                     name="Senupama Deshipriya"
                     role="Measurement and Metrics Analyst"
-                    imgsrc={require("../../images/profilepictures/senu.jpg")}
+                    imgsrc={require("../../images/profilepictures/senu.jpg")} alt=""
                 />
                 <ProfileContent
                     name="Daehyeon Kim"
                     role="Jenkins and Deployment Lead"
-                    imgsrc={require("../../images/profilepictures/kim.jpg")}
+                    imgsrc={require("../../images/profilepictures/kim.jpg")} alt=""
                 />
                 <ProfileContent
                     name="Kavindu Bopitiya"
                     role="Docker Specialist"
-                    imgsrc={require("../../images/profilepictures/kaviya.jpg")}
+                    imgsrc={require("../../images/profilepictures/kaviya.jpg")} alt=""
                 />
             </div>
         </div>
