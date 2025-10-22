@@ -10,7 +10,8 @@ pipeline {
         DOCKER_IMAGE = "devops-project-app"
         CONTAINER_NAME = "devops-project-container"
         APP_PORT = "80"
-        SSH_KEY = "C:/Users/daehyeon kim/.jenkins/SDE-Project-key.pem"
+        SSH_KEY = "C:/Users/daehyeon kim/.jenkins/SDE-Project-key.pem" //C:\Users\<username>\.jenkins\SDE-Project-key.pem
+
         SSH_USER = "ubuntu"
         SSH_HOST = "13.239.252.132"
         TEMP_DIR = "/home/ubuntu/temp_build/"
