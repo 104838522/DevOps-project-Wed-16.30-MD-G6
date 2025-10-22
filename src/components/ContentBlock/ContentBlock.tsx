@@ -45,13 +45,13 @@ function ContentBlock({title, content, image, left, colour, id = ""}:ContentBloc
                     <p>{content}</p>
                 </div>
                 
-                <img src={image}/>
+                <img src={image} alt=""/>
             </div>
         );
     } else {
         return(
             <div className={`${styles.container} ${colourprop}`} id={idprop}>
-                <img src={image}/>
+                <img src={image} alt=""/>
                 <div className={styles.textContainer}>
                     <h1>{title}</h1>
                     <p>{content}</p>
