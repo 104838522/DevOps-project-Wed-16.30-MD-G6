@@ -61,14 +61,7 @@ pipeline {
                     scp -i "${SSH_KEY}" -o StrictHostKeyChecking=no -r build/* ${SSH_USER}@${SSH_HOST}:${TEMP_DIR}
 
                     echo === Moving files to /var/www/html and restarting nginx ===
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} ^"
-                        sudo mkdir -p ${TEMP_DIR} && \
-                        sudo rm -rf ${HTML_DIR}* && \
-                        sudo mv ${TEMP_DIR}* ${HTML_DIR} && \
-                        sudo chown -R www-data:www-data ${HTML_DIR} && \
-                        sudo chmod -R 755 ${HTML_DIR} && \
-                        sudo systemctl restart nginx
-                    ^"
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'sudo mkdir -p ${TEMP_DIR} && sudo rm -rf ${HTML_DIR}* && sudo mv ${TEMP_DIR}* ${HTML_DIR} && sudo chown -R www-data:www-data ${HTML_DIR} && sudo chmod -R 755 ${HTML_DIR} && sudo systemctl restart nginx'
                 """
             }
         }
@@ -77,10 +70,10 @@ pipeline {
             steps {
                 echo 'Monitoring EC2 performance and status...'
                 bat """
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} ^"echo === CPU & Memory === && top -b -n 1 | head -5^"
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} ^"echo === Disk Usage === && df -h /var/www/html^"
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} ^"echo === Nginx Status === && sudo systemctl status nginx | head -5^"
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} ^"echo === HTTP Response === && curl -o /dev/null -s -w 'HTTP=%{http_code}, time_total=%{time_total}s\\n' http://localhost^"
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'echo === CPU & Memory === && top -b -n 1 | head -5'
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'echo === Disk Usage === && df -h /var/www/html'
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'echo === Nginx Status === && sudo systemctl status nginx | head -5'
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'echo === HTTP Response === && curl -o /dev/null -s -w "HTTP=%{http_code}, time_total=%{time_total}s\\n" http://localhost'
                 """
             }
         }
@@ -88,10 +81,10 @@ pipeline {
 
     post {
         success {
-            echo  'Pipeline completed successfully! App deployed and Nginx restarted on EC2.'
+            echo '✅ Pipeline completed successfully! App deployed and Nginx restarted on EC2.'
         }
         failure {
-            echo 'Pipeline failed. Cleaning up Docker environment...'
+            echo '❌ Pipeline failed. Cleaning up Docker environment...'
             bat "docker compose down || echo Cleanup complete"
         }
     }
