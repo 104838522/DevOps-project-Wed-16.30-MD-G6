@@ -6,7 +6,7 @@ function HeroBlock(){
         <div className={styles.container}>
             <h1>Software Deployment and Evolution</h1>
             <h2>Group Assignment - SDE40006</h2>
-            <img src={require('../../images/softdev.jpg')}/>
+            <img src={require('../../images/softdev.jpg')} alt=""/>
         </div>
     )
 }
