@@ -41,68 +41,53 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo 'Running automated tests...'
-                bat 'npm test -- --passWithNoTests || echo "Tests failed or skipped (demo environment)"'
+                bat 'npm test -- --passWithNoTests || echo "Tests skipped (demo environment)"'
             }
         }
 
-        stage('Archive Build Artifacts') {
-            steps {
-                echo 'Archiving build artifacts...'
-                archiveArtifacts artifacts: 'build/**', followSymlinks: false
-            }
-        }
-
-        // ---------------- Docker Stage ----------------
         stage('Docker Deploy') {
             steps {
                 echo 'Building and running Docker container...'
-                script {
-                    bat "docker compose build"
-                    bat "docker stop ${CONTAINER_NAME} || echo Container not running"
-                    bat "docker rm ${CONTAINER_NAME} || echo Container not found"
-                    bat "docker compose up -d"
-                    bat "timeout /t 5 /nobreak"
-                    bat "docker ps -f name=${CONTAINER_NAME}"
-                }
+                bat """
+                    docker compose build
+                    docker stop ${CONTAINER_NAME} || echo Container not running
+                    docker rm ${CONTAINER_NAME} || echo Container not found
+                    docker compose up -d
+                    timeout /t 5 /nobreak
+                    docker ps -f name=${CONTAINER_NAME}
+                """
             }
         }
 
-        // ---------------- AWS Deploy Stage ----------------
         stage('Deploy to AWS EC2') {
             steps {
-                echo 'Deploying build output to AWS EC2 production server...'
-                sh '''
-                    scp -i /var/lib/jenkins/SDE-project-key.pem -o StrictHostKeyChecking=no -r build/* ubuntu@13.239.252.132:/var/www/html/
-                '''
+                echo 'Deploying build output to AWS EC2...'
+                bat """
+                    echo Uploading files to AWS EC2...
+                    pscp -i "${SSH_KEY}" -r build/* ${SSH_USER}@${SSH_HOST}:${SSH_DIR}
+                """
             }
         }
 
         stage('Monitor AWS EC2') {
             steps {
-                echo 'Running remote system monitoring on AWS EC2...'
-                sh '''
-                    ssh -i /var/lib/jenkins/SDE-project-key.pem -o StrictHostKeyChecking=no ubuntu@13.239.252.132 "
-                        echo '===== CPU and Memory Stats =====';
-                        top -b -n 1 | head -5;
-                        echo '===== Memory Usage =====';
-                        free -m;
-                        echo '===== Uptime =====';
-                        uptime;
-                        echo '===== HTTP Response =====';
-                        curl -o /dev/null -s -w 'HTTP=%{http_code}, time_total=%{time_total}s\\n' http://localhost;
-                    "
-                '''
+                echo 'Running remote monitoring on AWS EC2...'
+                bat """
+                    plink -i "${SSH_KEY}" ${SSH_USER}@${SSH_HOST} "top -b -n 1 | head -5"
+                    plink -i "${SSH_KEY}" ${SSH_USER}@${SSH_HOST} "free -m"
+                    plink -i "${SSH_KEY}" ${SSH_USER}@${SSH_HOST} "uptime"
+                    plink -i "${SSH_KEY}" ${SSH_USER}@${SSH_HOST} "curl -o /dev/null -s -w 'HTTP=%{http_code}, time_total=%{time_total}s\\n' http://localhost"
+                """
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
-            echo "Docker container running locally, and app deployed to AWS EC2!"
+            echo ' Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed. Check Jenkins logs for details.'
+            echo ' Pipeline failed. Check Jenkins logs.'
             bat "docker compose down || echo Cleanup complete"
         }
     }
