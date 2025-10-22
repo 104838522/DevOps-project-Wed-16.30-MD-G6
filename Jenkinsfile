@@ -53,18 +53,19 @@ pipeline {
             }
         }
 
-        stage('Deploy to AWS EC2') {
+                stage('Deploy to AWS EC2') {
             steps {
                 echo 'Deploying build output to AWS EC2...'
                 bat """
                     echo === Uploading build folder to EC2 ===
                     scp -i "${SSH_KEY}" -o StrictHostKeyChecking=no -r build/* ${SSH_USER}@${SSH_HOST}:${TEMP_DIR}
-
+        
                     echo === Moving files to /var/www/html and restarting nginx ===
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'sudo mkdir -p ${TEMP_DIR} && sudo rm -rf ${HTML_DIR}* && sudo mv ${TEMP_DIR}* ${HTML_DIR} && sudo chown -R www-data:www-data ${HTML_DIR} && sudo chmod -R 755 ${HTML_DIR} && sudo systemctl restart nginx'
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "sudo mkdir -p ${TEMP_DIR} && sudo rm -rf ${HTML_DIR}* && sudo mv ${TEMP_DIR}* ${HTML_DIR} && sudo chown -R www-data:www-data ${HTML_DIR} && sudo chmod -R 755 ${HTML_DIR} && sudo systemctl restart nginx"
                 """
             }
         }
+
 
         stage('Monitor AWS EC2') {
             steps {
