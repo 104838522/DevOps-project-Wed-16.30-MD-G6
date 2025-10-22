@@ -11,9 +11,6 @@ pipeline {
         CONTAINER_NAME = "devops-project-container"
         APP_PORT = "80"
         SSH_KEY = "${env.USERPROFILE}\\.jenkins\\SDE-Project-key.pem"
-
-        //SSH_KEY = "C:/Users/daehyeon kim/.jenkins/SDE-Project-key.pem" //C:\Users\<username>\.jenkins\SDE-Project-key.pem
-
         SSH_USER = "ubuntu"
         SSH_HOST = "13.239.252.132"
         TEMP_DIR = "/home/ubuntu/temp_build/"
@@ -56,21 +53,20 @@ pipeline {
             }
         }
 
-                stage('Deploy to AWS EC2') {
+        stage('Deploy to AWS EC2') {
             steps {
                 echo 'Deploying build output to AWS EC2...'
                 bat """
                     echo === Uploading build folder to EC2 ===
                     scp -i "${SSH_KEY}" -o StrictHostKeyChecking=no -r build/* ${SSH_USER}@${SSH_HOST}:${TEMP_DIR}
-        
+
                     echo === Moving files to /var/www/html and restarting nginx ===
                     ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "sudo mkdir -p ${TEMP_DIR} && sudo rm -rf ${HTML_DIR}* && sudo mv ${TEMP_DIR}* ${HTML_DIR} && sudo chown -R www-data:www-data ${HTML_DIR} && sudo chmod -R 755 ${HTML_DIR} && sudo systemctl restart nginx"
                 """
             }
         }
 
-
-                stage('Monitor AWS EC2') {
+        stage('Monitor AWS EC2') {
             steps {
                 echo 'Monitoring EC2 performance and status...'
                 bat """
@@ -81,8 +77,7 @@ pipeline {
                 """
             }
         }
-
-    
+    }
 
     post {
         success {
