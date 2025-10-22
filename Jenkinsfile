@@ -17,12 +17,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                echo 'Cloning GitHub repository...'
-                git credentialsId: 'github-login', url: 'https://github.com/104838522/DevOps-project-Wed-16.30-MD-G6.git', branch: 'main'
-            }
-        }
 
         stage('Install Dependencies') {
             steps {
