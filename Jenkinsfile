@@ -74,10 +74,13 @@ pipeline {
             steps {
                 echo 'Monitoring EC2 performance and status...'
                 bat """
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo === CPU & Memory === && top -b -n 1 | head -5"
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo === Disk Usage === && df -h /var/www/html"
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo === Nginx Status === && sudo systemctl status nginx | head -5"
-                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo === HTTP Response === && curl -o /dev/null -s -w 'HTTP=%{http_code}, time_total=%{time_total}s\\n' http://localhost"
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo '=== CPU & Memory ===' && top -b -n 1 | head -5"
+
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo '=== Disk Usage ===' && df -h /var/www/html"
+
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo '=== Nginx Status ===' && sudo systemctl status nginx | head -5"
+
+                    ssh -i "${SSH_KEY}" -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "echo '=== HTTP Response ===' && curl -o /dev/null -s -w 'HTTP=%{http_code}, time_total=%{time_total}s\\n' http://localhost"
                 """
             }
         }
