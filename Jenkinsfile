@@ -83,10 +83,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Pipeline completed successfully! App deployed and Nginx restarted on EC2.'
+            echo 'Pipeline completed successfully! App deployed and Nginx restarted on EC2.'
         }
         failure {
-            echo '❌ Pipeline failed. Cleaning up Docker environment...'
+            echo 'Pipeline failed. Cleaning up Docker environment...'
             bat "docker compose down || echo Cleanup complete"
         }
     }
