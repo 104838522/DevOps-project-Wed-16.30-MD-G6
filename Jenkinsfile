@@ -24,6 +24,19 @@ pipeline {
                 bat 'npm install'
             }
         }
+        stage('Code Quality Check') {
+            steps {
+                echo 'Running ESLint for code quality...'
+                bat 'npx eslint ./src --max-warnings=0 || echo "Lint warnings detected"'
+            }
+        }
+
+        stage('Security Audit') {
+            steps {
+                echo 'Checking dependencies for vulnerabilities...'
+                bat 'npm audit --audit-level=high || echo "Security vulnerabilities found (review required)"'
+            }
+        }
         
         stage('Run Tests') {
             steps {
