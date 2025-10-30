@@ -32,17 +32,13 @@ pipeline {
         }
 
         stage('Security Audit') {
-            steps {
-                echo 'Checking dependencies for vulnerabilities...'
-                bat '''
-                    npm audit --audit-level=high
-                    if %errorlevel% neq 0 (
-                      echo Security vulnerabilities found (review required)
-                      exit /b 0
-                    )
-                    '''
-            }
+            echo 'Checking dependencies for vulnerabilities...'
+            bat '''
+                npm audit --audit-level=high || echo "Vulnerabilities found but continuing..."
+                echo Audit completed.
+            '''
         }
+
         
         stage('Run Tests') {
             steps {
