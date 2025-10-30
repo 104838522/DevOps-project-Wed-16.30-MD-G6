@@ -24,6 +24,13 @@ pipeline {
                 bat 'npm install'
             }
         }
+        
+        stage('Run Tests') {
+            steps {
+                echo 'Running automated tests...'
+                bat 'npm test -- --passWithNoTests || echo "Tests skipped (demo environment)"'
+            }
+        }
 
         stage('Build Application') {
             steps {
@@ -32,12 +39,7 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                echo 'Running automated tests...'
-                bat 'npm test -- --passWithNoTests || echo "Tests skipped (demo environment)"'
-            }
-        }
+        
 
         stage('Docker Build and Run') {
             steps {
