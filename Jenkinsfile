@@ -36,7 +36,7 @@ pipeline {
                 bat '''
                   npm audit --audit-level=high || (
                     echo "Vulnerabilities found — saving report and continuing..."
-                    npm audit --json > audit.json 2>nul || echo "no audit.json"
+                    npm audit --json > audit.json || echo "no audit.json"
                     exit /b 0
                   )
                 '''
